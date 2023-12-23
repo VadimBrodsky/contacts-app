@@ -36,13 +36,19 @@ func main() {
 	e.GET("/contacts", func(c echo.Context) error {
 		search := c.QueryParam("q")
 
+		var contacts []contact.Contact
 		if search != "" {
-			contact.Search(search)
+			contacts, _ = contact.Search(search)
 		} else {
-			contact.All()
+			contacts, _ = contact.All()
 		}
 
-		return c.Render(http.StatusOK, "index", "yo")
+		data := struct {
+			Search   string
+			Contacts []contact.Contact
+		}{Search: search, Contacts: contacts}
+
+		return c.Render(http.StatusOK, "layout.html", data)
 	})
 
 	e.Logger.Fatal(e.Start(":1323"))
