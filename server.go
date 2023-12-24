@@ -5,9 +5,9 @@ import (
 	"io"
 	"net/http"
 
+	contact "github.com/VadimBrodsky/contacts-app/models"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	contact "web1.0_app/models"
 )
 
 type Template struct {
@@ -24,9 +24,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-
 	e.Static("/public", "public")
-
 
 	t := &Template{
 		templates: template.Must(template.ParseGlob("views/*.html")),

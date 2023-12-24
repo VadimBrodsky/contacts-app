@@ -1,4 +1,4 @@
-module web1.0_app
+module github.com/VadimBrodsky/contacts-app
 
 go 1.21.4
 
