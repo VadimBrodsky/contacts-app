@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"html/template"
 	"io"
 	"net/http"
@@ -10,12 +11,17 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-type Template struct {
-	templates *template.Template
+type TemplateRegistry struct {
+	templates map[string]*template.Template
 }
 
-func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
+func (t *TemplateRegistry) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	tmpl, ok := t.templates[name]
+	if !ok {
+		err := errors.New("Template not found -> " + name)
+		return err
+	}
+	return tmpl.ExecuteTemplate(w, "base.html", data)
 }
 
 func main() {
@@ -26,10 +32,12 @@ func main() {
 
 	e.Static("/public", "public")
 
-	t := &Template{
-		templates: template.Must(template.ParseGlob("views/*.html")),
+	templates := make(map[string]*template.Template)
+	templates["contacts.html"] = template.Must(template.ParseFiles("views/contacts.html", "views/base.html"))
+	templates["new.html"] = template.Must(template.ParseFiles("views/new.html", "views/base.html"))
+	e.Renderer = &TemplateRegistry{
+		templates: templates,
 	}
-	e.Renderer = t
 
 	e.GET("/", func(c echo.Context) error {
 		return c.Redirect(http.StatusMovedPermanently, "/contacts")
