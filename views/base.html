@@ -1,0 +1,13 @@
+{{define "base.html"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ template "title" .}}</title>
+        <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.1">
+        <link rel="stylesheet" href="/public/css/site.css">
+    </head>
+    <body>
+        {{ template "content" . }}
+    </body>
+</html>
+{{end}}
