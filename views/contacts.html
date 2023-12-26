@@ -1,4 +1,6 @@
-{{define "content"}}
+{{ define "title" }}Contacts{{ end }}
+
+{{ define "content" }}
 <form action="/contacts" method="get" class="tool-bar">
   <label for="search">Search Term</label>
   <input id="search" type="search" name="q" value="{{.Search}}" />
@@ -16,7 +18,7 @@
     </tr>
   </thead>
   <tbody>
-    {{range .Contacts}}
+    {{ range .Contacts }}
     <tr>
       <td>{{.First}}</td>
       <td>{{.Last}}</td>
@@ -27,12 +29,11 @@
         <a href="/contacts/{{.Id}}/">View</a>
       </td>
     </tr>
-    {{end}}
+    {{ end }}
   </tbody>
 </table>
 
 <p>
   <a href="/contacts/new">Add Contact</a>
 </p>
-
-{{end}}
+{{ end }}
