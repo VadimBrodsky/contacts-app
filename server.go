@@ -50,7 +50,8 @@ func main() {
 			Contacts []contact.Contact
 		}{Search: search, Contacts: contacts}
 
-		return c.Render(http.StatusOK, "layout.html", data)
+		return c.Render(http.StatusOK, "contacts.html", data)
+	})
 
 	e.GET("/contacts/new", func(c echo.Context) error {
 		data := struct {
