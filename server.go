@@ -51,6 +51,13 @@ func main() {
 		}{Search: search, Contacts: contacts}
 
 		return c.Render(http.StatusOK, "layout.html", data)
+
+	e.GET("/contacts/new", func(c echo.Context) error {
+		data := struct {
+			Email  string
+			Errors map[string]string
+		}{Email: "", Errors: make(map[string]string)}
+		return c.Render(http.StatusOK, "new.html", data)
 	})
 
 	e.Logger.Fatal(e.Start(":1323"))

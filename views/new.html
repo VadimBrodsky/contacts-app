@@ -1,0 +1,12 @@
+{{ define "title" }}New Contact{{ end }}
+
+{{define "content"}}
+<form action="/contacts/new" method="post">
+  <legend>Contact Values</legend>
+  <p>
+    <label for="email">Email</label>
+    <input type="email" name="email" placeholder="Email" value="{{.Email}}" />
+    <span class="error">{{.Errors.Email}}</span>
+  </p>
+</form>
+{{end}}
